@@ -39,5 +39,23 @@ export const tasks = {
     calculate: (charCode, shift) =>
       String.fromCharCode(((charCode - 65 - shift + 26) % 26) + 65),
   },
+  vigenereCipher: {
+    range: { textMin: 5, textMax: 10, keyMin: 3, keyMax: 5 },
+    question: (text, key) =>
+      `Шифрование текста "${text}" с помощью ключа "${key}" методом Виженера. Каков результат?`,
+    calculate: (text, key) => {
+      const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const encrypt = (text, key) => {
+        let encrypted = "";
+        for (let i = 0; i < text.length; i++) {
+          const textIndex = alphabet.indexOf(text[i].toUpperCase());
+          const keyIndex = alphabet.indexOf(key[i % key.length].toUpperCase());
+          encrypted += alphabet[(textIndex + keyIndex) % 26];
+        }
+        return encrypted;
+      };
+      return encrypt(text.toUpperCase(), key.toUpperCase());
+    },
+  },
 };
 
